@@ -1,0 +1,170 @@
+﻿@model SCORE.Models.Exercicio
+
+
+
+
+<h2>Criar exercício</h2>
+
+
+
+
+
+@*
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <textarea asp-for="Descricao" class="form-control"></textarea>
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <select asp-for="Tipo" class="form-control" asp-items="Html.GetEnumSelectList<ExercicioTipo>()" > 
+                    <option value="">--Select type--</option>
+                </select>
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Questions</label>
+                <div id="questions-container">
+                    <div class="question-item">
+                        <div class="form-group">
+                            <label>Question</label>
+                            <input type="text" class="form-control question-text" />
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <label>Type</label>
+                            <input type="text" class="form-control question-type" />
+                        </div>
+                        <div class="form-group options-group" style="display:none;">
+                            <label>Options</label>
+                            <div class="option-items"></div>
+                            <button type="button" class="btn btn-primary add-option">Add Option</button>
+                        </div>
+                        <div class="form-group file-group" style="display:none;">
+                            <label>File Submission</label>
+                            <input type="file" class="form-control file-input" />
+                        </div>
+                        <div class="form-group open-response-group" style="display:none;">
+                            <label</label>
+                            <textarea class="form-control open-response"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary add-question">Add Question</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.add-question').click(function () {
+                var $template = $('.question-item').first().clone();
+                $template.find('.question-text').val('');
+                $template.find('.question-type').val($('#Type').val());
+                $template.find('.option-items').empty();
+                $template.find('.file-input').val('');
+                $template.find('.open-response').val('');
+                if ($('#Type').val() === 'MultipleChoice') {
+                    $template.find('.options-group').show();
+                    $template.find('.option-items').empty();
+                    $template.find('.option-items').append($('<div class="option-item"><input type="text" class="form-control option-text" /><button type="button" class="btn btn-danger remove-option">Remove</button></div>'));
+                    $('.add-option').click(function () {
+                        var $template = $('<div class="option-item"><input type="text" class="form-control option-text" /><button type="button" class="btn btn-danger remove-option">Remove</button></div>');
+                        $template.appendTo($(this).closest('.question-item').find('.option-items'));
+                    });
+
+                }
+                      } else if ($('#Type').val() === 'FileSubmission') {
+                        $template.find('.file-group').show();
+                    } else if ($('#Type').val() === 'OpenResponse') {
+                        $template.find('.open-response-group').show();
+                    }
+                $template.appendTo('#questions-container');
+            });
+
+            $('.add-option').click(function () {
+                var $template = $('<div class="option-item"><input type="text" class="form-control option-text" /><button type="button" class="btn btn-danger remove-option">Remove</button></div>');
+                $template.appendTo($(this).prev('.option-items'));
+            });
+
+            $(document).on('click', '.remove-option', function () {
+                $(this).parent('.option-item').remove();
+            });
+        });
+    </script>
+}
+
+*@
+
+
+
+
+@*@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Exercicio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <input asp-for="Tipo" class="form-control" />
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nota" class="control-label"></label>
+                <input asp-for="Nota" class="form-control" />
+                <span asp-validation-for="Nota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataEntrega" class="control-label"></label>
+                <input asp-for="DataEntrega" class="form-control" />
+                <span asp-validation-for="DataEntrega" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+*@
