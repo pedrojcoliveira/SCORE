@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SCORE.Models.FileViewModel>
+﻿@model IEnumerable<SCORE.Models.Exercicio>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,37 +7,45 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Upload">Create New</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Titulo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Size)
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataEntrega)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Name">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Name">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Name">Delete</a>
-
-                <a asp-controller="Exercicios" asp-action="Download" asp-route-id=@item.Name target="_blank">Download</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataEntrega)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdExercicio" class="btn btn-primary">Edit</a>
+                    @*<a asp-action="Details" asp-route-id="@item.IdExercicio">Details</a> |*@
+                    <a asp-controller="Exercicios" asp-action="Submissoes" class="btn btn-primary">Submissões</a>
+                    <a asp-action="Upload" class="btn btn-primary">Submeter</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdExercicio" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+            </tr>
+        }
     </tbody>
 </table>

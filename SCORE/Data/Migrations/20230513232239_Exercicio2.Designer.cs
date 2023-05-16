@@ -12,8 +12,8 @@ using SCORE.Data;
 namespace SCORE.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230403143104_oooo")]
-    partial class oooo
+    [Migration("20230513232239_Exercicio2")]
+    partial class Exercicio2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,9 +272,9 @@ namespace SCORE.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Id_Turma");
 
-                    b.Property<int>("IdUc")
+                    b.Property<int>("IdUC")
                         .HasColumnType("int")
-                        .HasColumnName("Id_Uc");
+                        .HasColumnName("Id_UC");
 
                     b.Property<bool>("Terminado")
                         .HasColumnType("bit");
@@ -283,6 +283,8 @@ namespace SCORE.Data.Migrations
                         .HasName("PK__Campeona__A8849C34EDC06937");
 
                     b.HasIndex("IdTurma");
+
+                    b.HasIndex("IdUC");
 
                     b.ToTable("Campeonato");
                 });
@@ -454,8 +456,16 @@ namespace SCORE.Data.Migrations
                     b.Property<DateTime?>("DataEntrega")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("Nota")
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Nota")
                         .HasColumnType("int");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdExercicio")
                         .HasName("PK__Exercici__8BAE3646C5C2B738");
@@ -679,7 +689,15 @@ namespace SCORE.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("FK__Campeonat__Id_Tu__33D4B598");
 
+                    b.HasOne("SCORE.Models.Uc", "IdUcNavigation")
+                        .WithMany("Campeonatos")
+                        .HasForeignKey("IdUC")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("IdTurmaNavigation");
+
+                    b.Navigation("IdUcNavigation");
                 });
 
             modelBuilder.Entity("SCORE.Models.CampeonatoEquipa", b =>
@@ -885,6 +903,8 @@ namespace SCORE.Data.Migrations
 
             modelBuilder.Entity("SCORE.Models.Uc", b =>
                 {
+                    b.Navigation("Campeonatos");
+
                     b.Navigation("DocenteUcs");
 
                     b.Navigation("ExercicioUcs");

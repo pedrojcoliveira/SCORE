@@ -17,10 +17,8 @@ public partial class Exercicio
     public string Titulo { get; set; }
 
     public string Descricao { get; set; }
-    public string Tipo { get; set; } //Escolha múltipla, submissão de ficheiro ou resposta aberta
-
-
-    public int Nota { get; set; }
+  
+    public int? Nota { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? DataEntrega { get; set; }

@@ -244,5 +244,5 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-    public DbSet<SCORE.Models.FileViewModel>? FileViewModel { get; set; }
+    //public DbSet<SCORE.Models.FileViewModel>? FileViewModel { get; set; }
 }

@@ -457,12 +457,8 @@ namespace SCORE.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Nota")
+                    b.Property<int?>("Nota")
                         .HasColumnType("int");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
@@ -499,19 +495,6 @@ namespace SCORE.Data.Migrations
                     b.HasIndex("IdUc");
 
                     b.ToTable("Exercicio_UC");
-                });
-
-            modelBuilder.Entity("SCORE.Models.FileViewModel", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("FileViewModel");
                 });
 
             modelBuilder.Entity("SCORE.Models.Jogador", b =>

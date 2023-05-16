@@ -1,0 +1,95 @@
+﻿@model IEnumerable<SCORE.Models.FileViewModel>
+
+@{
+    ViewData["Title"] = "Submissoes";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nota)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @using (Html.BeginForm("SetNota", "Exercicios", new { id = item.Name }))
+                    {
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(modelItem => item.Nota, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" value="Atribuir Nota" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Name">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Name">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Name">Delete</a>
+                    <a asp-controller="Exercicios" asp-action="Download" asp-route-id=@item.Name target="_blank">Download</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nota)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Name">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Name">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Name">Delete</a>
+                    <a asp-controller="Exercicios" asp-action="Download" asp-route-id=@item.Name target="_blank">Download</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+*@

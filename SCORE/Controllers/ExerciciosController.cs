@@ -22,16 +22,69 @@ namespace SCORE.Controllers
             _he = e;
         }
 
-
-        // GET: Exercicios
         public async Task<IActionResult> Index()
+        {
+
+            var applicationDbContext = _context.Exercicios;
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+
+
+        public List<FileViewModel> GetFiles(string he, string utilizador)
+        {
+            List<FileViewModel> arquivos = new List<FileViewModel>();
+
+            string caminho = Path.Combine("C:\\Users\\pedro\\Desktop\\UTAD\\3º Ano\\2ºSemestre\\Lab Projeto\\SCORE\\SCORE\\wwwroot\\Documents\\", he);
+
+            // Verifica se o diretório existe antes de tentar ler os arquivos
+            if (Directory.Exists(caminho))
+            {
+                // Obtém os nomes dos arquivos no diretório
+                string[] nomesArquivos = Directory.GetFiles(caminho);
+
+                // Cria um objeto FileViewModel para cada arquivo e adiciona à lista
+                foreach (string nomeArquivo in nomesArquivos)
+                {
+                    var arquivo = new FileViewModel { Name = Path.GetFileName(nomeArquivo), Nota = 0, Utilizador = utilizador };
+                    _context.Add(arquivo);
+                    arquivos.Add(arquivo);
+                }
+                _context.SaveChanges();
+            }
+
+            return arquivos;
+        }
+
+
+        public async Task<IActionResult> AtualizarNota(string nomeArquivo, int nota)
+        {
+            var arquivo = new FileViewModel { Name = nomeArquivo, Nota = nota };
+            _context.Update(arquivo);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Submissoes));
+        }
+
+
+
+
+        // GET
+
+        [Route("Exercicios/Submissoes")]
+        public async Task<IActionResult> Submissoes(int id, int nota)
         {
             DocFiles files = new DocFiles();
 
-            ViewBag.xpto = files.GetFiles(_he).Count();
+            string utilizador = User.Identity.Name;
 
-            return View(files.GetFiles(_he));
+            ViewBag.xpto = files.GetFiles(_he, User.Identity.Name).Count();
+
+
+
+            return View(files.GetFiles(_he, User.Identity.Name));
+
         }
+
 
         // GET: Exercicios/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -50,6 +103,8 @@ namespace SCORE.Controllers
 
             return View(exercicio);
         }
+
+
         public IActionResult Upload()
         {
             return View();
@@ -66,7 +121,7 @@ namespace SCORE.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdExercicio,Titulo,Descricao,Tipo,Nota,DataEntrega")] Exercicio exercicio)
+        public async Task<IActionResult> Create([Bind("IdExercicio,Titulo,Descricao,Nota,DataEntrega")] Exercicio exercicio)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +153,7 @@ namespace SCORE.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdExercicio,Titulo,Descricao,Tipo,Nota,DataEntrega")] Exercicio exercicio)
+        public async Task<IActionResult> Edit(int id, [Bind("IdExercicio,Titulo,Descricao,Nota,DataEntrega")] Exercicio exercicio)
         {
             if (id != exercicio.IdExercicio)
             {
@@ -129,7 +184,7 @@ namespace SCORE.Controllers
         }
 
 
-       
+
         // GET: Exercicios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -149,6 +204,8 @@ namespace SCORE.Controllers
         }
 
 
+
+
         // POST: Exercicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -163,7 +220,7 @@ namespace SCORE.Controllers
             {
                 _context.Exercicios.Remove(exercicio);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -203,7 +260,7 @@ namespace SCORE.Controllers
 
         private bool ExercicioExists(int id)
         {
-          return (_context.Exercicios?.Any(e => e.IdExercicio == id)).GetValueOrDefault();
+            return (_context.Exercicios?.Any(e => e.IdExercicio == id)).GetValueOrDefault();
         }
     }
 }

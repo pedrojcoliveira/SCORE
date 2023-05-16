@@ -84,7 +84,7 @@ namespace SCORE.Areas.Identity.Pages.Account
             /// </summary>
             /// 
             [Required]
-            [Display(Name="UserName")]
+            [Display(Name="Número Mecanográfico")]
             public string Username { get; set; }
 
 

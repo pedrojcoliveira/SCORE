@@ -2,7 +2,7 @@
 {
     public class DocFiles
     {
-        public List<FileViewModel> GetFiles(IHostEnvironment e)
+        public List<FileViewModel> GetFiles(IHostEnvironment e, string? name)
         {
             List<FileViewModel> list = new List<FileViewModel>();
 

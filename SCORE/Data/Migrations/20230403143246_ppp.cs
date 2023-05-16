@@ -10,20 +10,18 @@ namespace SCORE.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Id_Uc",
-                table: "Campeonato");
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
             migrationBuilder.AddColumn<int>(
                 name: "Id_Uc",
                 table: "Campeonato",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            
         }
     }
 }
