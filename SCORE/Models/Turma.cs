@@ -16,6 +16,8 @@ public partial class Turma
 
     public int Numero { get; set; }
 
+    public List<Aluno> Alunos { get; set; }
+
     [InverseProperty("IdTurmaNavigation")]
     public virtual ICollection<Campeonato> Campeonatos { get; } = new List<Campeonato>();
 

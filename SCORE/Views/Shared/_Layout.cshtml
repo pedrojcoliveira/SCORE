@@ -1,4 +1,4 @@
-﻿ <!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - SCORE</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="icon" type="image/png" href="~/Fotos/SCORE.png"/>
+    <link rel="icon" type="image/png" href="~/Fotos/SCORE.png" />
     <link rel="stylesheet" href="~/SCORE.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -22,21 +22,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                     @*   <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>*@
                         <li class="nav-item-UC">
-                            <a class="nav-link text-black" asp-area="" asp-controller="Ucs" asp-action="Index">UC</a>
+                            <a class="nav-link smooth-scroll" asp-area="" asp-controller="Ucs" asp-action="Index">UC</a>
                         </li>
                         <li class="nav-item-Exercicios">
-                            <a class="nav-link text-black" asp-area="" asp-controller="Exercicios" asp-action="Index">Exercicios</a>
-                        </li>
+                            <a class="nav-link smooth-scroll" asp-area="" asp-controller="Exercicios" asp-action="Index">Exercicios</a>
                         </li>
                         <li class="nav-item-Exercicios">
-                            <a class="nav-link text-black" asp-area="" asp-controller="Equipas" asp-action="Index">Plantel</a>
+                            <a class="nav-link smooth-scroll" asp-area="" asp-controller="Equipas" asp-action="Index">Plantel</a>
+                        </li>
+                        <li class="nav-item-Exercicios">
+                            <a class="nav-link smooth-scroll" asp-area="" asp-controller="TurmaAlunos" asp-action="ListarUtilizadores">Inscrever Alunos</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -49,9 +45,26 @@
             @RenderBody()
         </main>
     </div>
+  
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            // Exibir a janela de visualização ao passar o mouse sobre um link
+            $('a.smooth-scroll').hover(function () {
+                var linkText = $(this).text();
+                $('.preview-window').text(linkText).show();
+            }, function () {
+                $('.preview-window').hide();
+            });
+        });
+    </script>
 </body>
 </html>
+
+
+
+

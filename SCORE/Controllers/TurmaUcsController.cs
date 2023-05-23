@@ -40,7 +40,7 @@ namespace SCORE.Controllers
         }
 
 
-        // GET: TurmaUcs/Details/5
+        //GET: TurmaUcs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.TurmaUcs == null)
@@ -84,6 +84,7 @@ namespace SCORE.Controllers
            
             //return View(turmaUc);
         }
+
 
         // GET: TurmaUcs/Edit/5
         public async Task<IActionResult> Edit(int? id)

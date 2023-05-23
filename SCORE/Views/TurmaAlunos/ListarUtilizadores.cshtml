@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@model List<IdentityUser>
+
+<style>
+    .table-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .status-indicator {
+        font-weight: bold;
+    }
+
+    .nao-inscrito {
+        color: red;
+    }
+
+    .inscrito {
+        color: green;
+    }
+
+    button {
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Identificação do Aluno</th>
+                <th>Ações</th> <!-- Coluna para os botões de inscrição -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr id="aluno-@usuario.Id">
+                    <td>@usuario.UserName</td>
+                    <td>
+                        <form method="post" action="@Url.Action("InserirTurma", "Turmas")">
+                            <input type="hidden" name="alunoId" value="@usuario.Id" />
+                            <input type="hidden" name="docenteId" value="@((User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value)" />
+                            <select name="turmaId">
+                                @foreach (var turma in ViewBag.Turmas)
+                                {
+                                    <option value="@turma.IdTurma">@turma.Numero</option>
+                                }
+                            </select>
+                            <span class="status-indicator nao-inscrito">Não Inscrito</span>
+                            <button type="submit">Inscrever</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Intercepta o envio do formulário
+    document.querySelectorAll('form').forEach(function (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Impede o envio padrão do formulário
+
+            var alunoId = form.querySelector('input[name="alunoId"]').value; // Obtém o ID do aluno
+            var alunoRow = document.querySelector('#aluno-' + alunoId); // Encontra a linha do aluno pelo ID
+            var statusIndicator = alunoRow.querySelector('.status-indicator'); // Encontra o elemento <span> para o indicador de status
+
+            // Exibe o pop-up
+            alert('Aluno inscrito!');
+
+            // Atualiza o indicador de status para "Inscrito"
+            statusIndicator.textContent = 'Inscrito';
+            statusIndicator.classList.remove('nao-inscrito');
+            statusIndicator.classList.add('inscrito');
+
+            // Redireciona para a ação Index do controlador TurmaUcs
+            //window.location.href = '@Url.Action("Index", "TurmaUcs")';
+        });
+    });
+</script>
+
+

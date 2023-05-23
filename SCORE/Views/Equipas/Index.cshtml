@@ -4,7 +4,6 @@
     ViewData["Title"] = "Index";
 }*@
 
-
 <body class="plantel">
     <header class="formacao">
         FORMAÇÃO
@@ -47,76 +46,128 @@
 </body>
 
 <script>
-    // Obter todos os elementos dos jogadores e suplentes
-    const jogadores = document.querySelectorAll('.pos');
-    const suplentes = document.querySelectorAll('.suplente');
+    // Variáveis para armazenar informações do jogador e do suplente selecionados
+    let jogadorSelecionado = null;
+    let suplenteSelecionado = null;
+    let substituicoesRealizadas = 0;
 
-    // Variável para contar o número de substituições
-    let numSubstituicoes = 0;
+    // Função para exibir uma notificação com borda arredondada
+    function exibirNotificacao(mensagem) {
+        const notificacao = document.createElement('div');
+        notificacao.classList.add('notificacao');
+        notificacao.textContent = mensagem;
+        document.body.appendChild(notificacao);
+
+        // Remover a notificação após alguns segundos
+        setTimeout(() => {
+            notificacao.remove();
+        }, 3000);
+    }
+
+    // Event listener para jogadores
+    function jogadorSelecionadoListener() {
+        // Verificar se o jogador selecionado já possui um suplente atribuído
+        if (jogadorSelecionado && substituicoesRealizadas < 3) {
+            // Trocar os valores entre o jogador selecionado e o suplente
+            const temp = jogadorSelecionado.innerText;
+            jogadorSelecionado.innerText = suplenteSelecionado.innerText;
+            suplenteSelecionado.innerText = temp;
+
+            // Limpar as seleções
+            jogadorSelecionado = null;
+            suplenteSelecionado = null;
+
+            // Incrementar o contador de substituições realizadas
+            substituicoesRealizadas++;
+
+            // Verificar se o limite de substituições foi atingido
+            if (substituicoesRealizadas >= 3) {
+                // Remover o event listener para jogadores
+                jogadores.forEach(jogador =>
+                    jogador.removeEventListener('click', jogadorSelecionadoListener)
+                );
+
+                // Remover o event listener para suplentes
+                suplentes.forEach(suplente =>
+                    suplente.removeEventListener('click', suplenteSelecionadoListener)
+                );
+
+                // Exibir a notificação de limite de substituições alcançado
+                exibirNotificacao('Limite de substituições alcançado (3/3)');
+            }
+        } else {
+            // Armazenar o jogador selecionado
+            jogadorSelecionado = this;
+        }
+    }
+
+    // Event listener para suplentes
+    function suplenteSelecionadoListener() {
+        // Verificar se o suplente selecionado já possui um jogador atribuído
+        if (suplenteSelecionado && substituicoesRealizadas < 3) {
+            // Trocar os valores entre o suplente selecionado e o jogador
+            const temp = suplenteSelecionado.innerText;
+            suplenteSelecionado.innerText = jogadorSelecionado.innerText;
+            jogadorSelecionado.innerText = temp;
+
+            // Limpar as seleções
+            jogadorSelecionado = null;
+            suplenteSelecionado = null;
+
+            // Incrementar o contador de substituições realizadas
+            substituicoesRealizadas++;
+
+            // Verificar se o limite de substituições foi atingido
+            if (substituicoesRealizadas >= 3) {
+                // Remover o event listener para jogadores
+                jogadores.forEach(jogador =>
+                    jogador.removeEventListener('click', jogadorSelecionadoListener)
+                );
+
+                // Remover o event listener para suplentes
+                suplentes.forEach(suplente =>
+                    suplente.removeEventListener('click', suplenteSelecionadoListener)
+                );
+
+                // Exibir a notificação de limite de substituições alcançado
+                exibirNotificacao('Limite de substituições alcançado (3/3)');
+            }
+        } else {
+            // Armazenar o suplente selecionado
+            suplenteSelecionado = this;
+        }
+    }
 
     // Adicionar event listener para cada jogador
-    jogadores.forEach(jogador => {
-      jogador.addEventListener('click', () => {
-        // Armazenar informações do jogador selecionado
-        const jogadorSelecionado = jogador.innerText;
+    const jogadores = document.querySelectorAll('.pos');
+    jogadores.forEach(jogador =>
+        jogador.addEventListener('click', jogadorSelecionadoListener)
+    );
 
-        // Verificar se o número de substituições excedeu 3
-        if (numSubstituicoes <= 3) {
-          // Adicionar event listener para cada suplente
-          suplentes.forEach(suplente => {
-            suplente.addEventListener('click', () => {
-              // Armazenar informações do suplente selecionado
-              const suplenteSelecionado = suplente.innerText;
-
-              // Atualizar informações do jogador e do suplente
-              jogador.innerText = suplenteSelecionado;
-              suplente.innerText = jogadorSelecionado;
-
-              // Incrementar o contador de substituições
-              numSubstituicoes++;
-
-              // Verificar se o número de substituições excedeu 3
-              if (numSubstituicoes > 3) {
-                // Desativar todos os event listeners
-                jogadores.forEach(jogador => jogador.removeEventListener('click'));
-                suplentes.forEach(suplente => suplente.removeEventListener('click'));
-
-                // Mostrar notificação temporária
-                const notificacao = document.createElement('div');
-                notificacao.innerText = 'Você excedeu o número máximo de substituições.';
-                notificacao.style.position = 'fixed';
-                notificacao.style.top = '0';
-                notificacao.style.right = '0';
-                notificacao.style.backgroundColor = '#ff0000';
-                notificacao.style.color = '#ffffff';
-                notificacao.style.padding = '10px';
-                document.body.appendChild(notificacao);
-                setTimeout(() => {
-                  document.body.removeChild(notificacao);
-                }, 3000);
-              }
-            });
-          });
-        } else {
-          // Mostrar notificação temporária
-          const notificacao = document.createElement('div');
-          notificacao.innerText = 'Você excedeu o número máximo de substituições.';
-          notificacao.style.position = 'fixed';
-          notificacao.style.top = '0';
-          notificacao.style.right = '0';
-          notificacao.style.backgroundColor = '#ff0000';
-          notificacao.style.color = '#ffffff';
-          notificacao.style.padding = '10px';
-          document.body.appendChild(notificacao);
-          setTimeout(() => {
-            document.body.removeChild(notificacao);
-          }, 3000);
-        }
-      });
-    });
-
-
+    // Adicionar event listener para cada suplente
+    const suplentes = document.querySelectorAll('.suplente');
+    suplentes.forEach(suplente =>
+        suplente.addEventListener('click', suplenteSelecionadoListener)
+    );
 </script>
+
+<style>
+    .notificacao {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background-color: #f1f1f1 ;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #333;
+    }
+</style>
+
+
 
 @*<!DOCTYPE html>
 <html>

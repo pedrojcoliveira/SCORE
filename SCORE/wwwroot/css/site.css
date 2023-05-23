@@ -179,3 +179,23 @@ main.equipa {
         color: #BDC3C7;
         background: #34495e;
     }
+
+/* Estilos personalizados para a barra de navegação */
+.navbar {
+    transition: background-color 0.3s ease;
+}
+
+    .navbar.scrolled {
+        background-color: #f8f9fa; /* Cor de fundo quando rolada */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra quando rolada */
+    }
+
+.navbar-nav .nav-link.active {
+    font-weight: bold; /* Estilo do link ativo */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff; /* Cor do link ao passar o mouse */
+}
+
+

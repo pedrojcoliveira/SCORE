@@ -24,4 +24,5 @@ public partial class Aluno
 
     [InverseProperty("NmecanograficoAlunoNavigation")]
     public virtual ICollection<TurmaAluno> TurmaAlunos { get; } = new List<TurmaAluno>();
+    public string Role { get; internal set; }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCORE.Data;
 
@@ -11,9 +12,11 @@ using SCORE.Data;
 namespace SCORE.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230516091643_List_Alunos")]
+    partial class List_Alunos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +41,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -60,7 +63,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleClaims", (string)null);
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
@@ -112,7 +115,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -134,7 +137,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaims", (string)null);
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -147,7 +150,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -166,7 +169,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", (string)null);
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("SCORE.Models.Aluno", b =>
@@ -180,10 +183,6 @@ namespace SCORE.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("TurmaIdTurma")
                         .HasColumnType("int");
 
@@ -192,7 +191,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("TurmaIdTurma");
 
-                    b.ToTable("Aluno", (string)null);
+                    b.ToTable("Aluno");
                 });
 
             modelBuilder.Entity("SCORE.Models.AlunoCampeonato", b =>
@@ -234,7 +233,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("NmecanograficoAluno");
 
-                    b.ToTable("Aluno_Campeonato", (string)null);
+                    b.ToTable("Aluno_Campeonato");
                 });
 
             modelBuilder.Entity("SCORE.Models.AlunoEquipa", b =>
@@ -265,7 +264,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("NmecanograficoAluno");
 
-                    b.ToTable("Aluno_Equipa", (string)null);
+                    b.ToTable("Aluno_Equipa");
                 });
 
             modelBuilder.Entity("SCORE.Models.Campeonato", b =>
@@ -292,7 +291,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("IdUC");
 
-                    b.ToTable("Campeonato", (string)null);
+                    b.ToTable("Campeonato");
                 });
 
             modelBuilder.Entity("SCORE.Models.CampeonatoEquipa", b =>
@@ -325,7 +324,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("IdEquipa");
 
-                    b.ToTable("Campeonato_Equipa", (string)null);
+                    b.ToTable("Campeonato_Equipa");
                 });
 
             modelBuilder.Entity("SCORE.Models.CampeonatoJogo", b =>
@@ -352,7 +351,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("IdJogo");
 
-                    b.ToTable("Campeonato_Jogo", (string)null);
+                    b.ToTable("Campeonato_Jogo");
                 });
 
             modelBuilder.Entity("SCORE.Models.Docente", b =>
@@ -369,7 +368,7 @@ namespace SCORE.Data.Migrations
                     b.HasKey("NmecanograficoDocente")
                         .HasName("PK__Docente__BAA1BFEF0BE3947F");
 
-                    b.ToTable("Docente", (string)null);
+                    b.ToTable("Docente");
                 });
 
             modelBuilder.Entity("SCORE.Models.DocenteUc", b =>
@@ -396,7 +395,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("NmecanograficoDocente");
 
-                    b.ToTable("Docente_UC", (string)null);
+                    b.ToTable("Docente_UC");
                 });
 
             modelBuilder.Entity("SCORE.Models.Equipa", b =>
@@ -420,7 +419,7 @@ namespace SCORE.Data.Migrations
                     b.HasKey("IdEquipa")
                         .HasName("PK__Equipa__4B9119CE57613823");
 
-                    b.ToTable("Equipa", (string)null);
+                    b.ToTable("Equipa");
                 });
 
             modelBuilder.Entity("SCORE.Models.EquipaJogador", b =>
@@ -447,7 +446,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("IdJogador");
 
-                    b.ToTable("Equipa_Jogador", (string)null);
+                    b.ToTable("Equipa_Jogador");
                 });
 
             modelBuilder.Entity("SCORE.Models.Exercicio", b =>
@@ -476,7 +475,7 @@ namespace SCORE.Data.Migrations
                     b.HasKey("IdExercicio")
                         .HasName("PK__Exercici__8BAE3646C5C2B738");
 
-                    b.ToTable("Exercicio", (string)null);
+                    b.ToTable("Exercicio");
                 });
 
             modelBuilder.Entity("SCORE.Models.ExercicioUc", b =>
@@ -503,7 +502,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("IdUc");
 
-                    b.ToTable("Exercicio_UC", (string)null);
+                    b.ToTable("Exercicio_UC");
                 });
 
             modelBuilder.Entity("SCORE.Models.Jogador", b =>
@@ -526,7 +525,7 @@ namespace SCORE.Data.Migrations
                     b.HasKey("IdJogador")
                         .HasName("PK__Jogador__5720AAD9471CC4B6");
 
-                    b.ToTable("Jogador", (string)null);
+                    b.ToTable("Jogador");
                 });
 
             modelBuilder.Entity("SCORE.Models.Jogo", b =>
@@ -544,7 +543,7 @@ namespace SCORE.Data.Migrations
                     b.HasKey("IdJogo")
                         .HasName("PK__Jogo__FECD839810E75792");
 
-                    b.ToTable("Jogo", (string)null);
+                    b.ToTable("Jogo");
                 });
 
             modelBuilder.Entity("SCORE.Models.Turma", b =>
@@ -562,7 +561,7 @@ namespace SCORE.Data.Migrations
                     b.HasKey("IdTurma")
                         .HasName("PK__Turma__5CF918CE321987AE");
 
-                    b.ToTable("Turma", (string)null);
+                    b.ToTable("Turma");
                 });
 
             modelBuilder.Entity("SCORE.Models.TurmaAluno", b =>
@@ -589,7 +588,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("NmecanograficoAluno");
 
-                    b.ToTable("Turma_Aluno", (string)null);
+                    b.ToTable("Turma_Aluno");
                 });
 
             modelBuilder.Entity("SCORE.Models.TurmaUc", b =>
@@ -626,7 +625,7 @@ namespace SCORE.Data.Migrations
 
                     b.HasIndex("UcIdUc");
 
-                    b.ToTable("Turma_UC", (string)null);
+                    b.ToTable("Turma_UC");
                 });
 
             modelBuilder.Entity("SCORE.Models.Uc", b =>
@@ -646,7 +645,7 @@ namespace SCORE.Data.Migrations
                     b.HasKey("IdUc")
                         .HasName("PK__UC__16EC21A836FAADA2");
 
-                    b.ToTable("UC", (string)null);
+                    b.ToTable("UC");
                 });
 
             modelBuilder.Entity("SCORE.Models.Aluno", b =>

@@ -16,10 +16,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SCORE.Data;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace SCORE.Areas.Identity.Pages.Account
 {
@@ -52,6 +55,7 @@ namespace SCORE.Areas.Identity.Pages.Account
             _dbcontext = dbcontext;
             _roleManager = roleManager;
         }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -87,6 +91,10 @@ namespace SCORE.Areas.Identity.Pages.Account
             [Display(Name="Número Mecanográfico")]
             public string Username { get; set; }
 
+
+            [Required]
+            [Display(Name = "Nome")]
+            public string Nome { get; set; }
 
             [Required]
             [EmailAddress]

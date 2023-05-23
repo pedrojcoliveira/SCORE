@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using SCORE.Data;
+using SCORE.Data.Migrations;
 using SCORE.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace SCORE.Controllers
 {
@@ -36,6 +41,7 @@ namespace SCORE.Controllers
                           Problem("Entity set 'ApplicationDbContext.Turmas'  is null.");
         }
 
+
         // GET: Turmas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -60,8 +66,6 @@ namespace SCORE.Controllers
             return View();
         }
 
-
-
         // POST: Turmas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -69,19 +73,18 @@ namespace SCORE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdTurma,Numero")] Turma turma)
         {
-            if (ModelState.IsValid)
-            {
+
                 _context.Add(turma);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "TurmaUcs");
                 //return RedirectToAction(nameof(Index));
-            }
-            return View(turma);
-
+            //return View(turma);
         }
 
-        // GET: Turmas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+
+
+    // GET: Turmas/Edit/5
+    public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Turmas == null)
             {

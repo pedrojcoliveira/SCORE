@@ -1,6 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using NETCore.MailKit.Core;
 using SCORE.Data;
+using SCORE.Services;
+using SCORE.Services.Interfaces;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) //true
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -35,6 +41,13 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = false; //ver isto
     //options.User.AllowedEmailDomains = new[] { "utad.pt", "alunos.utad.pt" };
 });
+
+// Add Email Sender
+//builder.Services.AddTransient<IEmailSender, EmailSender>();
+//builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+
+// Add Email Notifications
+builder.Services.AddTransient<SCORE.Services.Interfaces.IEmailService, SendGridMailService>();
 
 
 
@@ -83,4 +96,13 @@ app.UseEndpoints(endpoints =>
         pattern: "Campeonato/{id}",
         defaults: new { controller = "Campeonato", action = "Index" });
 });
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "InserirTurma",
+//        pattern: "Turmas/InserirTurma",
+//        defaults: new { controller = "Turmas", action = "InserirTurma" });
+//});
+
 
