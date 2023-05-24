@@ -26,7 +26,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+            <tr class="table-row @(Model.LastOrDefault() == item ? "last-row" : "")">
                 <td>
                     @Html.DisplayFor(modelItem => item.IdUcNavigation.Nome)
                 </td>
@@ -40,6 +40,7 @@
                 <a asp-action="Edit" asp-route-id="@item.IdCampeonato">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IdCampeonato">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.IdCampeonato">Delete</a>
+                <a asp-action="TabelaClassificatoria">Classificação</a>
             </td>
         </tr>
 }

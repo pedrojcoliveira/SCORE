@@ -1,0 +1,48 @@
+﻿@model List<TabelaClassificatoriaItem>
+
+@{
+    ViewData["Title"] = "Tabela Classificatória";
+}
+
+<h1>Tabela Classificatória</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Posição</th>
+            <th>Número Mecanográfico</th>
+            <th>Pontuação</th>
+            <th>Próxima Jornada</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model[i].NomeAluno</td>
+                <td>@Model[i].Pontuacao</td>
+                <td>@((ViewBag.GetNomeAlunoAleatorio as Func<List<TabelaClassificatoriaItem>, string, string>)(Model, Model[i].NomeAluno))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th,
+        .table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+</style>
+

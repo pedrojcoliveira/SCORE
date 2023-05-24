@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,14 @@ namespace SCORE.Controllers
     public class CampeonatosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CampeonatosController(ApplicationDbContext context)
+
+
+        public CampeonatosController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Campeonatos
@@ -88,6 +93,41 @@ namespace SCORE.Controllers
             ViewData["IdUC"] = new SelectList(_context.Ucs, "IdUc", "IdUc", campeonato.IdUC);
             return View(campeonato);
         }
+
+        private string GetNomeAlunoAleatorio(List<TabelaClassificatoriaItem> tabelaClassificatoria, string nomeAlunoAtual)
+        {
+            var nomesDisponiveis = tabelaClassificatoria.Where(a => a.NomeAluno != nomeAlunoAtual).Select(a => a.NomeAluno).ToList();
+            var random = new Random();
+            var index = random.Next(nomesDisponiveis.Count);
+            return nomesDisponiveis[index];
+        }
+
+        public IActionResult TabelaClassificatoria()
+        {
+            var alunos = _userManager.GetUsersInRoleAsync("Aluno").Result;
+
+            var tabelaClassificatoria = new List<TabelaClassificatoriaItem>();
+
+            foreach (var aluno in alunos)
+            {
+                var item = new TabelaClassificatoriaItem
+                {
+                    NomeAluno = aluno.UserName,
+                    Pontuacao = 0
+                };
+
+                tabelaClassificatoria.Add(item);
+            }
+
+            tabelaClassificatoria = tabelaClassificatoria.OrderByDescending(item => item.Pontuacao).ToList();
+
+            ViewBag.GetNomeAlunoAleatorio = new Func<List<TabelaClassificatoriaItem>, string, string>(GetNomeAlunoAleatorio);
+
+            return View(tabelaClassificatoria);
+        }
+
+
+
 
         // POST: Campeonatos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
