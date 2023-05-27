@@ -49,6 +49,22 @@ body.main {
 }
 
 
+.layout-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
 /*PLANTEL*/
 
 body.plantel {
