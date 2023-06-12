@@ -20,11 +20,13 @@ namespace SCORE.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _sender;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _sender = sender;
+            _signInManager = signInManager;
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace SCORE.Areas.Identity.Pages.Account
             }
 
             Email = email;
-            DisplayConfirmAccountLink= _sender is EmailSender;
+            DisplayConfirmAccountLink = _sender is EmailSender;
             // Once you add a real email sender, you should remove this code that lets you confirm the account
             DisplayConfirmAccountLink = false; //true
             if (DisplayConfirmAccountLink)
@@ -73,6 +75,18 @@ namespace SCORE.Areas.Identity.Pages.Account
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                     protocol: Request.Scheme);
+
+                // Realiza a confirmação do email e login automático
+                var result = await _userManager.ConfirmEmailAsync(user, Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)));
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
+                else
+                {
+                    // Lidar com o caso em que a confirmação de email falha
+                }
             }
 
             return Page();

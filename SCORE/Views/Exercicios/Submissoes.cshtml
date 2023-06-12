@@ -32,14 +32,19 @@
                     @Html.DisplayFor(modelItem => item.Size)
                 </td>
                 <td>
+                    <div class="nota-container" data-item-name="@item.Name">
+                        @Html.DisplayFor(modelItem => item.Nota)
+                    </div>
+                </td>
+                <td>
                     @using (Html.BeginForm("SetNota", "Exercicios", new { id = item.Name }))
                     {
                         <div class="form-group">
                             <div class="col-md-4">
-                                @Html.TextBoxFor(modelItem => item.Nota, new { @class = "form-control" })
+                                @Html.TextBoxFor(modelItem => item.Nota, new { @class = "form-control nota-input", data_item_name = item.Name })
                             </div>
                             <div class="col-md-2">
-                                <input type="submit" value="Atribuir Nota" class="btn btn-primary" />
+                                <input type="submit" value="Atribuir Nota" class="btn btn-primary submit-nota" />
                             </div>
                         </div>
                     }
@@ -48,12 +53,58 @@
                     <a asp-action="Edit" asp-route-id="@item.Name">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Name">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Name">Delete</a>
-                    <a asp-controller="Exercicios" asp-action="Download" asp-route-id=@item.Name target="_blank">Download</a>
+                    <a asp-controller="Exercicios" asp-action="Download" asp-route-id="@item.Name" target="_blank">Download</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Armazena a nota original em um objeto de dados na div de contêiner
+            $(".nota-container").each(function () {
+                var nota = $(this).text();
+                $(this).data("original-nota", nota);
+            });
+
+            // Manipula o evento de envio do formulário
+            $(".submit-nota").click(function (e) {
+                e.preventDefault();
+
+                var form = $(this).closest("form");
+                var notaInput = form.find(".nota-input");
+                var notaContainer = form.closest("tr").find(".nota-container");
+
+                // Obtém a nota atualizada do campo de entrada
+                var novaNota = notaInput.val();
+
+                // Atualiza a nota na div de contêiner
+                notaContainer.text(novaNota);
+
+                // Armazena a nova nota em um objeto de dados na div de contêiner
+                notaContainer.data("nova-nota", novaNota);
+
+                // Desativa o campo de entrada
+                notaInput.prop("disabled", true);
+
+                // Desativa o botão de envio
+                $(this).prop("disabled", true);
+            });
+
+            // Restaura a nota original ao fechar a sessão
+            $(window).on("beforeunload", function () {
+                $(".nota-container").each(function () {
+                    var notaContainer = $(this);
+                    var notaOriginal = notaContainer.data("original-nota");
+                    notaContainer.text(notaOriginal);
+                });
+            });
+        });
+    </script>
+}
+
 
 
 

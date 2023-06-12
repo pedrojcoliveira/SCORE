@@ -53,6 +53,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public virtual DbSet<TurmaUc> TurmaUcs { get; set; }
 
     public virtual DbSet<Uc> Ucs { get; set; }
+    public object Arquivos { get; internal set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("name=DefaultConnection");

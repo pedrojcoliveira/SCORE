@@ -59,12 +59,17 @@ namespace SCORE.Controllers
 
         public async Task<IActionResult> AtualizarNota(string nomeArquivo, int nota)
         {
-            var arquivo = new FileViewModel { Name = nomeArquivo, Nota = nota };
-            _context.Update(arquivo);
-            await _context.SaveChangesAsync();
+            var arquivo = await _context.Exercicios.FirstOrDefaultAsync(a => a.Titulo == nomeArquivo);
+
+            if (arquivo != null)
+            {
+                arquivo.Nota = nota;
+                _context.Update(arquivo);
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToAction(nameof(Submissoes));
         }
-
 
 
 

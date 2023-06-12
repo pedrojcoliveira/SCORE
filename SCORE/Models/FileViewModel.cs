@@ -20,5 +20,6 @@ namespace SCORE.Models
         public int Id { get; internal set; }
 
         public byte[] Conteudo { get; set; }
+
     }
 }

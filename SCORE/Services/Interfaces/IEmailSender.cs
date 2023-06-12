@@ -32,7 +32,7 @@ namespace SCORE.Services.Interfaces
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("pedrojcoliveira2001@gmail.com", "SCORE"),
+                From = new EmailAddress("scoreutad@gmail.com", "SCORE"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

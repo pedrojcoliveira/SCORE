@@ -5,8 +5,7 @@ using NETCore.MailKit.Core;
 using SCORE.Data;
 using SCORE.Services;
 using SCORE.Services.Interfaces;
-
-
+using IEmailService = SCORE.Services.Interfaces.IEmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) //true
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true) //true
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -43,11 +42,16 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 // Add Email Sender
-//builder.Services.AddTransient<IEmailSender, EmailSender>();
-//builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+
+builder.Services.Configure<AuthMessageSenderOptions>(options =>
+{
+    options.SendGridKey = builder.Configuration["SendGridApiKey"];
+});
 
 // Add Email Notifications
-builder.Services.AddTransient<SCORE.Services.Interfaces.IEmailService, SendGridMailService>();
+builder.Services.AddTransient<IEmailService, SendGridMailService>();
 
 
 
