@@ -98,7 +98,7 @@ namespace SCORE.Areas.Identity.Pages.Account
 
             [Required]
             [EmailAddress]
-           // [RegularExpression(@"^[a-zA-Z0-9._%+-]+@(alunos\.utad\.pt|utad\.pt)$", ErrorMessage = "Invalid email address.")]
+            [RegularExpression(@"^[a-zA-Z0-9._%+-]+@(alunos\.utad\.pt|utad\.pt)$", ErrorMessage = "Invalid email address.")]
             [Display(Name = "Email Institucional")]
             public string Email { get; set; }
 

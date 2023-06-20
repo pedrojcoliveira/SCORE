@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using SCORE.Models;
 
 namespace SCORE.Controllers
 {
+    [Authorize]
     public class UcsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,35 +38,44 @@ namespace SCORE.Controllers
         //}
 
         // GET: Ucs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Ucs == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Ucs == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var uc = await _context.Ucs
-                .FirstOrDefaultAsync(m => m.IdUc == id);
-            if (uc == null)
-            {
-                return NotFound();
-            }
+        //    var uc = await _context.Ucs
+        //        .FirstOrDefaultAsync(m => m.IdUc == id);
+        //    if (uc == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(uc);
-        }
+        //    return View(uc);
+        //}
 
         // GET: Ucs/Create
+
+
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
- 
+
 
         // POST: Ucs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
+    
+        
+    
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("IdUc,Nome")] Uc uc)
         {
             if (ModelState.IsValid)
@@ -76,6 +87,7 @@ namespace SCORE.Controllers
             return View(uc);
         }
 
+        //[Authorize(Roles = "Admin")]
         // GET: Ucs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -92,6 +104,7 @@ namespace SCORE.Controllers
             return View(uc);
         }
 
+        //[Authorize(Roles = "Admin")]
         // POST: Ucs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -128,6 +141,7 @@ namespace SCORE.Controllers
         }
 
         // GET: Ucs/Delete/5
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Ucs == null)

@@ -4,22 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Exercícios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Criar Novo Exercício</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Titulo)
+                Unidade Curricular
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                Descrição
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataEntrega)
+                Data de Entrega
             </th>
             <th></th>
         </tr>
@@ -38,14 +38,19 @@
                     @Html.DisplayFor(modelItem => item.DataEntrega)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdExercicio" class="btn btn-primary">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@item.IdExercicio" class="btn btn-secondary">Edit</a>
                     @*<a asp-action="Details" asp-route-id="@item.IdExercicio">Details</a> |*@
-                    <a asp-controller="Exercicios" asp-action="Submissoes" class="btn btn-primary">Submissões</a>
-                    <a asp-action="Upload" class="btn btn-primary">Submeter</a>
-                    <a asp-action="Delete" asp-route-id="@item.IdExercicio" class="btn btn-danger">
-                        <i class="fas fa-trash-alt"></i> Delete
-                    </a>
+                    <a asp-controller="Exercicios" asp-action="Submissoes" class="btn btn-secondary">Submissões</a>
+                    <a asp-action="Upload" class="btn btn-secondary">Submeter</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdExercicio" class="btn btn-danger">Delete</a>
             </tr>
         }
     </tbody>
 </table>
+
+<style>
+    .table {
+        border-bottom: none;
+    }
+</style>
+

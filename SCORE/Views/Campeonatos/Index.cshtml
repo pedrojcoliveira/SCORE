@@ -6,9 +6,7 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<a asp-action="Create" class="btn btn-primary">Novo Campeonato</a>
 <table class="table">
     <thead>
         <tr>
@@ -37,10 +35,10 @@
                     @Html.DisplayFor(modelItem => item.Terminado)
                 </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCampeonato">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdCampeonato">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdCampeonato">Delete</a>
-                <a asp-action="TabelaClassificatoria">Classificação</a>
+               @* <a asp-action="Details" asp-route-id="@item.IdCampeonato">Details</a> |*@
+                     <a asp-action="Edit" asp-route-id="@item.IdCampeonato" class="btn btn-secondary">Edit</a>
+                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdCampeonato">Delete</a>
+                    <a asp-action="TabelaClassificatoria" class="btn btn-secondary">Classificação</a>
             </td>
         </tr>
 }

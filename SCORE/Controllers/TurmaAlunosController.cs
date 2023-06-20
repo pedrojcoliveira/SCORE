@@ -32,7 +32,7 @@ namespace SCORE.Controllers
         }
 
 
-       // [Authorize(Roles = "Docente")]
+       //[Authorize(Roles = "Docente, Admin")]
         public IActionResult ListarUtilizadores()
         {
             // Obtenha os dados das turmas e atribua à propriedade ViewBag.Turmas

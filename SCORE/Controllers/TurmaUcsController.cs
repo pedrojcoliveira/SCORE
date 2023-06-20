@@ -61,6 +61,7 @@ namespace SCORE.Controllers
         }
 
         // GET: TurmaUcs/Create
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["IdTurma"] = new SelectList(_context.Turmas, "IdTurma", "IdTurma");
@@ -73,6 +74,7 @@ namespace SCORE.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("IdTurmaUc,IdTurma,IdUc")] TurmaUc turmaUc)
         {
          
@@ -87,6 +89,7 @@ namespace SCORE.Controllers
 
 
         // GET: TurmaUcs/Edit/5
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.TurmaUcs == null)
@@ -109,6 +112,7 @@ namespace SCORE.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("IdTurmaUc,IdTurma,IdUc")] TurmaUc turmaUc)
         {
             if (id != turmaUc.IdTurmaUc)
@@ -142,6 +146,7 @@ namespace SCORE.Controllers
         }
 
         // GET: TurmaUcs/Delete/5
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.TurmaUcs == null)

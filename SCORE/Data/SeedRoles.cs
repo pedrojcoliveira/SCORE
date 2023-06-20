@@ -10,6 +10,7 @@ namespace SCORE.Data
             {
                 roleManager.CreateAsync(new IdentityRole("Docente")).Wait();
                 roleManager.CreateAsync(new IdentityRole("Aluno")).Wait();
+                roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
             }
         }
     }

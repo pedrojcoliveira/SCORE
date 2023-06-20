@@ -244,6 +244,17 @@ h1 {
 }
 
 
+/*Aviso nas Submissões*/
+.nota-aviso {
+    background-color: #ffe6e6;
+    color: #cc0000;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+}
 
 
 

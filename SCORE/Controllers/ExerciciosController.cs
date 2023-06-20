@@ -22,6 +22,7 @@ namespace SCORE.Controllers
             _he = e;
         }
 
+        //[Authorize(Roles = "Docente")]
         public async Task<IActionResult> Index()
         {
 
@@ -56,7 +57,7 @@ namespace SCORE.Controllers
             return arquivos;
         }
 
-
+        //[Authorize(Roles = "Docente")]
         public async Task<IActionResult> AtualizarNota(string nomeArquivo, int nota)
         {
             var arquivo = await _context.Exercicios.FirstOrDefaultAsync(a => a.Titulo == nomeArquivo);
@@ -74,6 +75,7 @@ namespace SCORE.Controllers
 
 
         // GET
+        //[Authorize(Roles = "Docente")]
 
         [Route("Exercicios/Submissoes")]
         public async Task<IActionResult> Submissoes(int id, int nota)
@@ -191,6 +193,7 @@ namespace SCORE.Controllers
 
 
         // GET: Exercicios/Delete/5
+        //[Authorize(Roles = "Docente")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Exercicios == null)

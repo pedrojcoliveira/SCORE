@@ -13,10 +13,13 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
     }
 
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
+
+    public DbSet<FileViewModel> Files { get; set; }
 
     public virtual DbSet<Aluno> Alunos { get; set; }
 

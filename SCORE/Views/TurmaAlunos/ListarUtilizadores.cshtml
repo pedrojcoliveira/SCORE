@@ -12,6 +12,9 @@
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: white; /* Definindo a cor de fundo da tabela como branca */
     }
 
     th, td {
@@ -42,6 +45,11 @@
         cursor: pointer;
         border-radius: 4px;
     }
+
+    .btn-desinscrever {
+        background-color: red;
+        color: white;
+    }
 </style>
 
 <div class="table-container">
@@ -49,7 +57,7 @@
         <thead>
             <tr>
                 <th>Identificação do Aluno</th>
-                <th>Ações</th> <!-- Coluna para os botões de inscrição -->
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +66,7 @@
                 <tr id="aluno-@usuario.Id">
                     <td>@usuario.UserName</td>
                     <td>
-                        <form method="post" action="@Url.Action("InserirTurma", "Turmas")">
+                        <form method="post" action="@Url.Action("RemoverTurma", "Turmas")">
                             <input type="hidden" name="alunoId" value="@usuario.Id" />
                             <input type="hidden" name="docenteId" value="@((User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value)" />
                             <select name="turmaId">
@@ -68,7 +76,8 @@
                                 }
                             </select>
                             <span class="status-indicator nao-inscrito">Não Inscrito</span>
-                            <button type="submit">Inscrever</button>
+                            <button type="submit" class="inscrever-button">Inscrever</button>
+                            <button type="button" class="desinscrever-button" style="display: none;">Desinscrever</button>
                         </form>
                     </td>
                 </tr>
@@ -86,19 +95,43 @@
             var alunoId = form.querySelector('input[name="alunoId"]').value; // Obtém o ID do aluno
             var alunoRow = document.querySelector('#aluno-' + alunoId); // Encontra a linha do aluno pelo ID
             var statusIndicator = alunoRow.querySelector('.status-indicator'); // Encontra o elemento <span> para o indicador de status
+            var inscreverButton = alunoRow.querySelector('.inscrever-button'); // Botão de inscrever
+            var desinscreverButton = alunoRow.querySelector('.desinscrever-button'); // Botão de desinscrever
 
             // Exibe o pop-up
-            alert('Aluno inscrito!');
+            alert('Ação realizada com sucesso!');
+
+            // Alterna a exibição dos botões de inscrever e desinscrever
+            inscreverButton.style.display = "none";
+            desinscreverButton.style.display = "inline-block";
 
             // Atualiza o indicador de status para "Inscrito"
             statusIndicator.textContent = 'Inscrito';
             statusIndicator.classList.remove('nao-inscrito');
             statusIndicator.classList.add('inscrito');
+        });
+    });
 
-            // Redireciona para a ação Index do controlador TurmaUcs
-            //window.location.href = '@Url.Action("Index", "TurmaUcs")';
+    // Intercepta o clique do botão "Desinscrever"
+    document.querySelectorAll('.desinscrever-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var alunoRow = button.closest('tr'); // Encontra a linha do aluno
+            var statusIndicator = alunoRow.querySelector('.status-indicator'); // Encontra o elemento <span> para o indicador de status
+            var inscreverButton = alunoRow.querySelector('.inscrever-button'); // Botão de inscrever
+            var desinscreverButton = alunoRow.querySelector('.desinscrever-button'); // Botão de desinscrever
+
+            // Exibe o pop-up
+            alert('Ação realizada com sucesso!');
+
+            // Alterna a exibição dos botões de inscrever e desinscrever
+            inscreverButton.style.display = "inline-block";
+            desinscreverButton.style.display = "none";
+
+            // Atualiza o indicador de status para "Não Inscrito"
+            statusIndicator.textContent = 'Não Inscrito';
+            statusIndicator.classList.remove('inscrito');
+            statusIndicator.classList.add('nao-inscrito');
         });
     });
 </script>
-
 

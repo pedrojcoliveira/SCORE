@@ -506,6 +506,33 @@ namespace SCORE.Data.Migrations
                     b.ToTable("Exercicio_UC");
                 });
 
+            modelBuilder.Entity("SCORE.Models.FileViewModel", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("Conteudo")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nota")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Utilizador")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("SCORE.Models.Jogador", b =>
                 {
                     b.Property<int>("IdJogador")

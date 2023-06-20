@@ -1,19 +1,20 @@
 ﻿@model IEnumerable<SCORE.Models.FileViewModel>
 
 @{
-    ViewData["Title"] = "Submissoes";
+    ViewData["Title"] = "Submissões";
 }
 
-<h1>Index</h1>
+<h1 class="text-white">Submissões</h1>
 
-<table class="table">
+<div class="nota-aviso">
+    As notas devem ser atribuídas de 0 a 5.
+</div>
+
+<table class="table table-borderless">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Size)
+                Nome do Ficheiro
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nota)
@@ -27,9 +28,6 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Size)
                 </td>
                 <td>
                     <div class="nota-container" data-item-name="@item.Name">
@@ -50,10 +48,9 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Name">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Name">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Name">Delete</a>
-                    <a asp-controller="Exercicios" asp-action="Download" asp-route-id="@item.Name" target="_blank">Download</a>
+                    <div class="text-center">
+                        <a asp-controller="Exercicios" asp-action="Download" asp-route-id="@item.Name" class="btn btn-secondary" target="_blank">Download</a>
+                    </div>
                 </td>
             </tr>
         }
@@ -79,6 +76,12 @@
 
                 // Obtém a nota atualizada do campo de entrada
                 var novaNota = notaInput.val();
+
+                // Verifica se a nova nota é válida
+                if (novaNota > 5) {
+                    alert("Nota inválida! Insira um valor de 0 a 5.");
+                    return;
+                }
 
                 // Atualiza a nota na div de contêiner
                 notaContainer.text(novaNota);
